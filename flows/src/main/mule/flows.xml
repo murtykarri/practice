@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="ea629e0e-825a-40b1-bd56-489b6c3325c7" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="mainflow" doc:id="ee632061-7fe5-453c-a732-b59a04a394b6" >
+		<http:listener doc:name="Listener" doc:id="9ef84302-16b4-4c51-a49a-053c80993141" config-ref="HTTP_Listener_config" path="/flow"/>
+		<logger level="INFO" doc:name="main flow" doc:id="12094ca1-2cf7-400a-ad87-f8516e7f5df0" message="&lt;&lt;&lt;&lt;&lt;---main flow started---&gt;&gt;&gt;&gt;&gt;" />
+		<flow-ref doc:name="sub-Reference" doc:id="43d64fef-17a6-468a-a07a-d405781f58cd" name="SubFlow"/>
+		<async doc:name="Async" doc:id="ccd492df-b6c7-457a-9c0d-02df9c5b1920" >
+			<flow-ref doc:name="private- Reference" doc:id="1fdbeac1-87a4-47bb-98f6-0cf7bb77208d" name="privateflow" />
+		</async>
+		<logger level="INFO" doc:name="Logger" doc:id="30eb17fb-1355-4d15-884c-a33ae1c1a3ac" message="two"/>
+		<logger level="INFO" doc:name="Logger" doc:id="862a59e0-7874-4b8c-a261-a0b897940020" message="three"/>
+		<logger level="INFO" doc:name="Logger" doc:id="fb94a6c0-840d-4d41-8bf9-06658e399780" message="four"/>
+		<logger level="INFO" doc:name="Logger" doc:id="2f0b4577-01e6-41b9-9e7d-a50e293b54a9" message="five"/>
+	</flow>
+	<sub-flow name="SubFlow" doc:id="a5fc1a7b-5487-442f-ae32-56d8e599bcca" >
+		<logger level="INFO" doc:name="subflow" doc:id="7136c8c7-5a8c-4c55-9de2-87c167d21514" message="sub flow started"/>
+	</sub-flow>
+	<flow name="privateflow" doc:id="f9a13e79-6614-468f-aa24-40ba9fecf3b1" >
+		<logger level="INFO" doc:name="private log" doc:id="47a6afa0-b04a-4ca6-80e6-28b7da3a4543" message="&lt;&lt;&lt;&lt;---private flow started----&gt;&gt;&gt;&gt;&gt;"/>
+		<logger level="INFO" doc:name="Logger" doc:id="54b50323-be47-4f8a-8f98-0dfd9b429134" message="processing"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6f120eb2-d661-4a3d-8353-a5c681a1d929" message="&lt;&lt;&lt;&lt;&lt;------private flow ended-------&gt;&gt;&gt;"/>
+	</flow>
+</mule>
